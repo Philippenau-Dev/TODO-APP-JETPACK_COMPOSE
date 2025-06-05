@@ -25,12 +25,12 @@ class TaskService {
     }
 
     suspend fun getTasks(): List<Task> {
-        val response: HttpResponse = client.get("http://172.20.205.254:8000/tasks")
+        val response: HttpResponse = client.get("http://localhost:8000/tasks")
        return Json.decodeFromString(ListSerializer(Task.serializer()), response.body())
     }
 
     suspend fun addTask(task: CreateTaskDto): Task {
-        val response: HttpResponse = client.post("http://172.20.205.254:8000/tasks") {
+        val response: HttpResponse = client.post("http://localhost:8000/tasks") {
             contentType(io.ktor.http.ContentType.Application.Json)
             setBody(task)
         }
@@ -38,7 +38,7 @@ class TaskService {
     }
 
     suspend fun updateTask(task: CreateTaskDto, taskId: String): Task {
-        val response: HttpResponse = client.put("http://172.20.205.254:8000/tasks/$taskId") {
+        val response: HttpResponse = client.put("http://localhost:8000/tasks/$taskId") {
             contentType(io.ktor.http.ContentType.Application.Json)
             setBody(task)
         }
@@ -46,7 +46,7 @@ class TaskService {
     }
 
     suspend fun deleteTask(taskId: String): Boolean {
-        val response: HttpResponse = client.delete("http://172.20.205.254:8000/tasks/$taskId")
+        val response: HttpResponse = client.delete("http://localhost:8000/tasks/$taskId")
         return response.status == io.ktor.http.HttpStatusCode.NoContent
     }
 }
